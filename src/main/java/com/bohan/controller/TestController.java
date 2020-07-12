@@ -4,12 +4,13 @@ import com.bohan.exception.BaseResponseCode;
 import com.bohan.exception.BaseResponseCodeImp;
 import com.bohan.exception.BusinessExceptionIpm;
 import com.bohan.utils.ResultData;
+import com.bohan.vo.req.TestReqVO;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiModelProperty;
 import io.swagger.annotations.ApiOperation;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
 
 @RestController
 @Api(value = "testing API")
@@ -43,6 +44,13 @@ public class TestController {
         }
 
         return ResultData.success(type);
+    }
+
+    @PostMapping("/valid/error")
+    @ApiModelProperty(value = "test validator error exception")
+    public ResultData testValidator(@RequestBody @Valid TestReqVO vo){
+        ResultData rs = ResultData.success();
+        return rs;
     }
 
 }
