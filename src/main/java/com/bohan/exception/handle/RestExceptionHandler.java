@@ -35,6 +35,12 @@ public class RestExceptionHandler {
         return createValidExceptionResp(errors);
     }
 
+    /**
+     * 这里这么做是因为errors有多个 需要遍历来获取
+     * @param errors
+     * @param <T>
+     * @return
+     */
     private <T> ResultData<T> createValidExceptionResp(List<ObjectError> errors){
         String[] msgs = new String[errors.size()];
         int i = 0;
