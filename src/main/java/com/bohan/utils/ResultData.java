@@ -67,7 +67,6 @@ public class ResultData<T> {
 
     // operation success without data
     public static ResultData success(){
-        System.out.println("asdasdasd");
         return new ResultData();
     }
 

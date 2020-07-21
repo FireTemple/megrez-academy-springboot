@@ -57,9 +57,10 @@
         var $=layui.jquery;
         var carousel=layui.carousel;
         form.on('submit',function (data) {
-            // console.log(JSON.stringify(data.field));
             CoreUtil.sendAjax("/api/user/login",JSON.stringify(data.field),function (res) {
                 layer.msg(res.msg);
+                // 这里把userid放到session里面
+                CoreUtil.setData("userId", res.data.userId);
                 setTimeout(function () {
                     window.location.href="/index/home";
                 },2000);

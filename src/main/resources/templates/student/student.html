@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>table模块快速使用</title>
+    <link rel="stylesheet" href="/layui/css/layui.css" media="all">
+</head>
+<body>
+
+<table id="demo" lay-filter="test"></table>
+<script type="text/html" id="operation">
+    <a class="layui-btn layui-btn-xs" lay-event="detail">register</a>
+    <a class="layui-btn layui-btn-xs layui-btn-normal" lay-event="detail">edit</a>
+    <a class="layui-btn layui-btn-xs layui-btn-danger" lay-event="detail">delete</a>
+</script>
+<script src="/layui/layui.js"></script>
+<script src="/js/core.util.js"></script>
+<script>
+    layui.use(['jquery','table'], function(){
+        var table = layui.table;
+        var userId = CoreUtil.getData('userId');
+        console.log(userId);
+        //第一个实例
+        table.render({
+            elem: '#demo'
+            ,url: '/api/students/' + userId //数据接口
+            ,page: true //开启分页，
+            ,parseData: function (res) {
+                console.log(res);
+                return{
+                    "code": res.code, //解析接口状态
+                    "msg": res.msg, //解析提示文本
+                    "count": res.data.length, //解析数据长度
+                    "data": res.data //解析数据列表
+                };
+            }
+            ,cols: [
+                [
+                    {field: 'id', title: 'ID', sort: true, fixed: 'left'}
+                    ,{field: 'firstName', title: 'first name'}
+                    ,{field: 'lastName', title: 'last name'}
+                    ,{field: 'birth', title: 'date of birth',width: 130}
+                    ,{field: 'gender', title: 'gender'}
+                    ,{fixed: 'right',width:200, align:'center',toolbar:'#operation'}
+                ]
+            ],
+            cellMinWidth: 100
+        });
+
+    });
+</script>
+</body>
+</html>

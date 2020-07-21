@@ -9,11 +9,19 @@ var CoreUtil = (function () {
         layui.jquery.ajax({
             url: url,
             cache: false,
-            async: async == undefined ? true : async,
+            async: async === undefined ? true : async,
             data: params,
-            type: method == undefined ? "POST" : method,
-            contentType: contentType == undefined ? 'application/json; charset=UTF-8': contentType ,
+            type: method === undefined ? "POST" : method,
+            contentType: contentType === undefined ? 'application/json; charset=UTF-8': contentType ,
             dataType: "json",
+            beforeSend: function(request){
+              if (headers === undefined){
+                // undefined 是登录操作 这里不做任何处理 因为还没有获取任何数据
+              } else {
+                  // 其他都是操作 需要在头内放入userid
+                  request.setRequestHeader("userId", CoreUtil.getData("userId"));
+              }
+            },
             success: function (res) {
                 top.layer.close(roleSaveLoading);
                 if (typeof ft == "function") {
@@ -33,7 +41,10 @@ var CoreUtil = (function () {
                 if(XMLHttpRequest.status === 404){
                     // top.window.location.href="/index/404";
                 }else{
-                    layer.msg("服务器好像除了点问题！请稍后试试");
+                    console.log(XMLHttpRequest.status);
+                    layer.msg("server problem, pleases try later",{
+                        time: 3000
+                    });
                 }
             }
         });

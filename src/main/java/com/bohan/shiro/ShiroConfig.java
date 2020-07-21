@@ -29,15 +29,20 @@ public class ShiroConfig {
          * perms: 必须有某个资源的quanxian
          * role: 必须有角色
          */
-        filter.put("/user/*","authc");
-        filter.put("/test/**","authc");
-        filter.put("/index/**","anon");
 
+        filter.put("/index/**","anon");
+        filter.put("/images/**", "anon");
+        filter.put("/js/**", "anon");
+        filter.put("/layui/**", "anon");
+        filter.put("/css/**", "anon");
+        filter.put("/treetable-lay/**", "anon");
         filter.put("/swagger/**", "anon");
         filter.put("/v2/api-docs", "anon");
         filter.put("/swagger-ui.html", "anon");
         filter.put("/swagger-resources/**", "anon");
 
+
+//        filter.put("/**", "authc");
 
         factoryBean.setLoginUrl("/index/login");
         factoryBean.setFilterChainDefinitionMap(filter);

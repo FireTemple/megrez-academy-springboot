@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bohan.mapper.CourseMapper">
+
+    <resultMap id="BaseResultMap" type="com.bohan.entity.Course">
+        <id column="id" jdbcType="VARCHAR" property="id" />
+        <result column="id" jdbcType="VARCHAR" property="id"/>
+        <result column="name" jdbcType="VARCHAR" property="courseName"/>
+        <result column="tuition" jdbcType="VARCHAR" property="tuition"/>
+        <result column="session" jdbcType="VARCHAR" property="session"/>
+        <result column="professor_name" jdbcType="VARCHAR" property="professorName"/>
+        <result column="start_time" jdbcType="TIMESTAMP" property="startTime"/>
+        <result column="end_time" jdbcType="TIMESTAMP" property="endTime"/>
+        <result column="textbook" jdbcType="VARCHAR" property="textbook"/>
+        <result column="prerequisite" jdbcType="TIMESTAMP" property="prerequisite"/>
+    </resultMap>
+
+
+
+    <select id="queryAll" resultMap="BaseResultMap" >
+        select c.id,c.name,c.tuition,p.first_name as professor_name,c.start_time,c.end_time,c.textbook,c.prerequisite, c.session
+        from course as c
+        LEFT JOIN professor as p
+        on c.t_id = p.id;
+    </select>
+</mapper>

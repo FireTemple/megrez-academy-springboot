@@ -1,4 +1,4 @@
-package com.bohan.service;
+package com.bohan.service.impl;
 
 import com.bohan.exception.BaseResponseCode;
 import com.bohan.exception.BaseResponseCodeImp;

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bohan.mapper.ProfessorMapper">
+
+    <resultMap id="name_id" type="com.bohan.vo.resp.CourseProfessorRespVO">
+        <id column="id" jdbcType="VARCHAR" property="id" />
+        <result column="id" jdbcType="VARCHAR" property="id"/>
+        <result column="first_name" jdbcType="VARCHAR" property="firstName"/>
+        <result column="last_name" jdbcType="VARCHAR" property="lastName"/>
+    </resultMap>
+
+
+    <select id="queryAllProfessorName" resultMap="name_id">
+        select id, first_name,last_name from professor
+    </select>
+</mapper>
