@@ -65,6 +65,7 @@
                     <a class="" href="javascript:;">Course</a>
                     <dl class="layui-nav-child">
                         <dd><a id="course" href="javascript:;" >View Courses</a></dd>
+                        <dd><a id="addCress" href="javascript:;" >Add Courses</a></dd>
 <!--                        <dd><a href="javascript:;">列表二</a></dd>-->
 <!--                        <dd><a href="javascript:;">列表三</a></dd>-->
 <!--                        <dd><a href="">超链接</a></dd>-->
@@ -117,6 +118,10 @@
 
         $('#student').on('click', function () {
             $('.layui-body iframe').attr('src','/index/student');
+        })
+
+        $('#addCress').on('click', function () {
+            $('.layui-body iframe').attr('src','/index/course/add');
         })
 
     });

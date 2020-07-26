@@ -6,7 +6,9 @@
     <link rel="stylesheet" href="/layui/css/layui.css" media="all">
 </head>
 <body>
-
+<blockquote class="layui-elem-quote layui-text">
+    Some information
+</blockquote>
 <table id="demo" lay-filter="test"></table>
 <script type="text/html" id="operation">
     <a class="layui-btn layui-btn-xs" lay-event="detail">register</a>
@@ -40,7 +42,11 @@
                     ,{field: 'firstName', title: 'first name'}
                     ,{field: 'lastName', title: 'last name'}
                     ,{field: 'birth', title: 'date of birth',width: 130}
-                    ,{field: 'gender', title: 'gender'}
+                    ,{field: 'gender', title: 'gender',templet:function (item) {
+                        if(item.gender === 1){
+                            return 'male';
+                        } else return 'female';
+                    }}
                     ,{fixed: 'right',width:200, align:'center',toolbar:'#operation'}
                 ]
             ],

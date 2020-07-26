@@ -60,6 +60,16 @@ public class IndexController {
         return "course/add_course";
     }
 
+
+
+    @GetMapping("/signup")
+    @ApiOperation(value = "go to signup page")
+    public String goSignup(){
+        return "signup";
+    }
+
+
+
     @GetMapping("/test")
     @ApiOperation(value = "go to test page")
     public String goTest(){

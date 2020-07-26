@@ -6,22 +6,112 @@
     <resultMap id="BaseResultMap" type="com.bohan.entity.Course">
         <id column="id" jdbcType="VARCHAR" property="id" />
         <result column="id" jdbcType="VARCHAR" property="id"/>
-        <result column="name" jdbcType="VARCHAR" property="courseName"/>
+        <result column="name" jdbcType="VARCHAR" property="name"/>
         <result column="tuition" jdbcType="VARCHAR" property="tuition"/>
         <result column="session" jdbcType="VARCHAR" property="session"/>
         <result column="professor_name" jdbcType="VARCHAR" property="professorName"/>
-        <result column="start_time" jdbcType="TIMESTAMP" property="startTime"/>
-        <result column="end_time" jdbcType="TIMESTAMP" property="endTime"/>
+        <result column="start_time" jdbcType="VARCHAR" property="startTime"/>
+        <result column="end_time" jdbcType="VARCHAR" property="endTime"/>
         <result column="textbook" jdbcType="VARCHAR" property="textbook"/>
-        <result column="prerequisite" jdbcType="TIMESTAMP" property="prerequisite"/>
+        <result column="prerequisite_id" jdbcType="VARCHAR" property="prerequisiteId"/>
+        <result column="des" jdbcType="VARCHAR" property="des"/>
+    </resultMap>
+
+    <resultMap id="BasicInfo" type="com.bohan.vo.resp.CourseBaseInfo">
+        <id column="id" jdbcType="VARCHAR" property="id" />
+        <result column="id" jdbcType="VARCHAR" property="id"/>
+        <result column="name" jdbcType="VARCHAR" property="name"/>
+        <result column="session" jdbcType="VARCHAR" property="session"/>
     </resultMap>
 
 
 
     <select id="queryAll" resultMap="BaseResultMap" >
-        select c.id,c.name,c.tuition,p.first_name as professor_name,c.start_time,c.end_time,c.textbook,c.prerequisite, c.session
+        select c.id,c.name,c.tuition,p.first_name as professor_name,c.start_time,c.end_time,c.textbook,c.prerequisite_id, c.session
         from course as c
         LEFT JOIN professor as p
-        on c.t_id = p.id;
+        on c.t_id = p.id
+        where passed = 1 ;
     </select>
+
+    <select id="queryBaseInfo" resultMap="BasicInfo">
+        select id,name,session
+        from course
+    </select>
+
+    <insert id="insertSelective" parameterType="com.bohan.entity.Course">
+        insert into course
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="name != null">
+                name,
+            </if>
+            <if test="session != null">
+                session,
+            </if>
+            <if test="startTime != null">
+                start_time,
+            </if>
+            <if test="endTime != null">
+                end_time,
+            </if>
+            <if test="tuition != null">
+                tuition,
+            </if>
+            <if test="textbook != null">
+                textbook,
+            </if>
+            <if test="prerequisiteId != null">
+                prerequisite_id,
+            </if>
+            <if test="des != null">
+                des,
+            </if>
+            <if test="tId != null">
+                t_id,
+            </if>
+            <if test="passed != null">
+                passed,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=VARCHAR},
+            </if>
+            <if test="name != null">
+                #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="session != null">
+                #{session,jdbcType=VARCHAR},
+            </if>
+            <if test="startTime != null">
+                #{startTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="endTime != null">
+                #{endTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="tuition != null">
+                #{tuition,jdbcType=VARCHAR},
+            </if>
+            <if test="textbook != null">
+                #{textbook,jdbcType=VARCHAR},
+            </if>
+            <if test="prerequisiteId != null">
+                #{prerequisiteId,jdbcType=VARCHAR},
+            </if>
+            <if test="des != null">
+                #{des,jdbcType=TINYINT},
+            </if>
+            <if test="tId != null">
+                #{tId,jdbcType=TINYINT},
+            </if>
+            <if test="passed != null">
+                #{passed,jdbcType=TINYINT},
+            </if>
+        </trim>
+    </insert>
+
+
 </mapper>
