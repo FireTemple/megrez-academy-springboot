@@ -8,7 +8,8 @@ public enum BaseResponseCodeImp implements BaseResponseCode{
     SUCCESS(0,"operation success"),
     SYSTEM_ERROR(200000,"system error, pleases wait"),
     METHOD_IDENTITY_ERROR(100000,"input data error"),
-    DATABSE_ERROR(400001,"insert error")
+    DATABASE_ERROR_INSERT(400001,"insert error"),
+    DATABASE_ERROR_UPDATE(400002,"update error")
     //error start with 1 means it is data error
     //error start with 2 means it is system error
     //error start with 3 means login error

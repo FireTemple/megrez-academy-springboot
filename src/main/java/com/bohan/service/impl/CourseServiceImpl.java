@@ -44,7 +44,7 @@ public class CourseServiceImpl implements CourseService {
         course.setPassed("1");
         int i = courseMapper.insertSelective(course);
         if (i != 1){
-            throw new BusinessExceptionIpm(BaseResponseCodeImp.DATABSE_ERROR);
+            throw new BusinessExceptionIpm(BaseResponseCodeImp.DATABASE_ERROR_INSERT);
         }
     }
 }

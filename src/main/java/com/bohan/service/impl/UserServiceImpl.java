@@ -71,7 +71,7 @@ public class UserServiceImpl implements UserService {
 
         int i = userMapper.insertSelective(user);
         if (i != 1){
-            throw new BusinessExceptionIpm(BaseResponseCodeImp.DATABSE_ERROR);
+            throw new BusinessExceptionIpm(BaseResponseCodeImp.DATABASE_ERROR_INSERT);
         }
     }
 }

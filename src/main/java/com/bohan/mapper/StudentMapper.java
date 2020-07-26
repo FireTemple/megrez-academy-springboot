@@ -12,4 +12,8 @@ public interface StudentMapper {
     List<Student> queryStudentsByUserId(String userId);
 
     int insertSelective(Student student);
+
+    int deleteById(String id);
+
+    int updateByPrimaryKeySelective(Student student);
 }

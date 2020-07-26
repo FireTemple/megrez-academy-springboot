@@ -18,13 +18,14 @@
     <select id="queryAll" resultMap="BaseResultMap" >
         select <include refid="Base_Column_List"></include>
         from student
+        where status = 1
     </select>
 
     <select id="queryStudentsByUserId" resultMap="BaseResultMap" parameterType="java.lang.String">
         select <include refid="Base_Column_List"></include>
         from student
         <where>
-            p_id = #{userId}
+            p_id = #{userId} and status = 1
         </where>
     </select>
 
@@ -83,5 +84,35 @@
             </if>
         </trim>
     </insert>
+
+    <update id="deleteById" parameterType="java.lang.String">
+        update student
+        set status = 2
+        where id = #{id}
+    </update>
+
+
+    <update id="updateByPrimaryKeySelective" parameterType="com.bohan.entity.Student">
+        update student
+        <set>
+            <if test="firstName != null">
+                first_name = #{firstName,jdbcType=VARCHAR},
+            </if>
+            <if test="lastName != null">
+                last_name = #{lastName,jdbcType=VARCHAR},
+            </if>
+            <if test="birth != null">
+                birth = #{birth,jdbcType=VARCHAR},
+            </if>
+            <if test="gender != null">
+                gender = #{gender,jdbcType=VARCHAR},
+            </if>
+            <if test="email != null">
+                email = #{email,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=VARCHAR}
+    </update>
+
 
 </mapper>

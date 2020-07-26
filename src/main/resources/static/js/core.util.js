@@ -17,6 +17,8 @@ var CoreUtil = (function () {
             beforeSend: function(request){
               if (headers === undefined){
                 // undefined 是登录操作 这里不做任何处理 因为还没有获取任何数据
+              }else if (headers === 'studentId'){
+                  request.setRequestHeader('studentId',CoreUtil.getData("studentId"));
               } else {
                   // 其他都是操作 需要在头内放入userid
                   request.setRequestHeader("userId", CoreUtil.getData("userId"));

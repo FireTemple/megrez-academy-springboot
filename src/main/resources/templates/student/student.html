@@ -4,31 +4,114 @@
     <meta charset="utf-8">
     <title>table模块快速使用</title>
     <link rel="stylesheet" href="/layui/css/layui.css" media="all">
+    <style>
+        .editArea{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 30px;
+            display: none;
+        }
+
+        .show{
+            display: flex;
+        }
+    </style>
 </head>
 <body>
 <blockquote class="layui-elem-quote layui-text">
     Some information
 </blockquote>
 <table id="demo" lay-filter="test"></table>
+
 <script type="text/html" id="operation">
-    <a class="layui-btn layui-btn-xs" lay-event="detail">register</a>
-    <a class="layui-btn layui-btn-xs layui-btn-normal" lay-event="detail">edit</a>
-    <a class="layui-btn layui-btn-xs layui-btn-danger" lay-event="detail">delete</a>
+    <a class="layui-btn layui-btn-xs layui-btn-normal" lay-event="edit">edit</a>
+    <a class="layui-btn layui-btn-xs layui-btn-danger deleteKid" lay-event="del" >delete</a>
 </script>
 <script type="text/html" id="toolbar">
     <div class="layui-btn-group">
-        <button  type="button" class="layui-btn" lay-event="addDept">
+        <button  type="button" class="layui-btn" lay-event="addDept" id="addKids">
             <i class="layui-icon">&#xe608;</i> add kids
         </button>
     </div>
 </script>
+
+<div class="editArea">
+
+    <form class="layui-form" action="" lay-filter="edit">
+        <div class="layui-form-item">
+            <label class="layui-form-label">First Name</label>
+            <div class="layui-input-inline">
+                <input type="text" name="firstName" lay-verify="required|name" autocomplete="off"
+                       placeholder="Neal" lay-reqtext="first name can't be empty" class="layui-input">
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">Last Name</label>
+            <div class="layui-input-inline">
+                <input type="text" name="lastName" lay-verify="required|name" autocomplete="off"
+                       lay-reqtext="last name can't be empty" class="layui-input">
+            </div>
+        </div>
+
+
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">Date of birth</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="birth" id="date" lay-verify="date" placeholder="yyyy-MM-dd" autocomplete="off"
+                           class="layui-input" >
+                </div>
+            </div>
+        </div>
+
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">gender</label>
+            <div class="layui-input-inline">
+                <select name="gender">
+                    <option value="1" >male</option>
+                    <option value="2">female</option>
+                </select>
+            </div>
+        </div>
+
+
+
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">email</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="email" lay-verify="" autocomplete="off" class="layui-input" placeholder="if have">
+                </div>
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button type="submit" class="layui-btn" lay-submit="" lay-filter="form1">Save</button>
+                <button type="reset" class="layui-btn layui-btn-primary">Reset</button>
+                <button class="layui-btn layui-btn-primary closeForm">close</button>
+            </div>
+        </div>
+
+    </form>
+</div>
 <script src="/layui/layui.js"></script>
 <script src="/js/core.util.js"></script>
 <script>
-    layui.use(['jquery','table'], function(){
+    layui.use(['jquery','table','form','laydate'], function(){
         var table = layui.table;
         var userId = CoreUtil.getData('userId');
-        console.log(userId);
+        var $ = layui.jquery;
+        var form = layui.form;
+        var laydate = layui.laydate
+
+        //日期
+        laydate.render({
+            elem: '#date'
+        });
         //第一个实例
         table.render({
             elem: '#demo'
@@ -60,6 +143,61 @@
             cellMinWidth: 100,
             toolbar: '#toolbar'
         });
+        
+        $('#addKids').on('click',function () {
+            window.location.href = '/index/student/add';
+        });
+
+        $('.closeForm').on('click',function () {
+            $('.editArea').removeClass('show');
+        })
+
+        table.on('tool(test)', function(obj){
+            var data = obj.data;
+            if(obj.event === 'detail'){
+                layer.msg('ID：'+ data.id + ' 的查看操作');
+            } else if(obj.event === 'del'){
+                layer.confirm('Are you sure you will delete it', function(index){
+                    CoreUtil.sendAjax('/api/students/' + data.id,null,function (res) {
+                        obj.del();
+                        layer.close(index);
+                    },'DELETE',false);
+
+                });
+            } else if(obj.event === 'edit'){
+                $('.editArea').addClass('show');
+                console.log(data.id);
+                CoreUtil.setData('studentId',data.id);
+                form.val('edit', {
+                    "firstName": data.firstName // "name": "value"
+                    ,"lastName": data.lastName
+                    ,"birth": data.birth
+                    ,"gender": data.gender
+                    ,"email": data.email
+                });
+            }
+        });
+
+        //监听提交
+        form.on('submit(form1)', function (data) {
+            var json = JSON.stringify(data.field);
+            console.log(json);
+            CoreUtil.sendAjax('/api/student',json,function (res) {
+
+                top.layer.msg(res.msg,{icon: 1,time:2000,shade:0.8});
+
+            },'POST','studentId');
+
+
+            setTimeout(function () {
+                window.location.href = "/index/student";
+            }, 2000);
+
+            return false;
+        });
+
+
+
 
     });
 </script>

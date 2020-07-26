@@ -6,6 +6,7 @@ import com.bohan.exception.BusinessExceptionIpm;
 import com.bohan.mapper.StudentMapper;
 import com.bohan.service.StudentService;
 import com.bohan.vo.req.StudentAddReqVO;
+import com.bohan.vo.req.StudentUpdateReqVO;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -35,7 +36,28 @@ public class StudentServiceImpl implements StudentService {
 
         int i = studentMapper.insertSelective(student);
         if (i != 1){
-            throw new BusinessExceptionIpm(BaseResponseCodeImp.DATABSE_ERROR);
+            throw new BusinessExceptionIpm(BaseResponseCodeImp.DATABASE_ERROR_INSERT);
+        }
+    }
+
+    @Override
+    public void deleteStudent(String id) {
+        int i = studentMapper.deleteById(id);
+        if (i != 1){
+            throw new BusinessExceptionIpm(BaseResponseCodeImp.DATABASE_ERROR_UPDATE);
+        }
+    }
+
+
+    @Override
+    public void updateStudentById(StudentUpdateReqVO vo) {
+        Student student = new Student();
+        BeanUtils.copyProperties(vo, student);
+        System.out.println("id:" + student.getId());
+        int i = studentMapper.updateByPrimaryKeySelective(student);
+        if (i != 1){
+            System.out.println("i: " + i);
+            throw new BusinessExceptionIpm(BaseResponseCodeImp.DATABASE_ERROR_UPDATE);
         }
     }
 }
