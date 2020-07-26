@@ -9,6 +9,7 @@
         <result column="phone" jdbcType="VARCHAR" property="phone"/>
         <result column="email" jdbcType="VARCHAR" property="email"/>
         <result column="address" jdbcType="VARCHAR" property="address"/>
+        <result column="create_time" jdbcType="VARCHAR" property="createTime"/>
     </resultMap>
 
     <sql id="Base_Column_List">
@@ -20,5 +21,55 @@
         from user
     </select>
 
+    <select id="queryUserByUsername" resultMap="BaseResultMap">
+        select <include refid="Base_Column_List"></include>
+        from user
+        where username = #{username,jdbcType=VARCHAR}
+    </select>
+
+
+    <insert id="insertSelective" parameterType="com.bohan.entity.User">
+        insert into user
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="username != null">
+                username,
+            </if>
+            <if test="password != null">
+                password,
+            </if>
+            <if test="phone != null">
+                phone,
+            </if>
+            <if test="email != null">
+                email,
+            </if>
+            <if test="address != null">
+                address,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=VARCHAR},
+            </if>
+            <if test="username != null">
+                #{username,jdbcType=VARCHAR},
+            </if>
+            <if test="password != null">
+                #{password,jdbcType=VARCHAR},
+            </if>
+            <if test="phone != null">
+                #{phone,jdbcType=TIMESTAMP},
+            </if>
+            <if test="email != null">
+                #{email,jdbcType=TIMESTAMP},
+            </if>
+            <if test="address != null">
+                #{address,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
 
 </mapper>

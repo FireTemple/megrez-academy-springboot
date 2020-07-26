@@ -8,5 +8,8 @@ public interface UserMapper {
 
     List<User> queryAll();
 
+    List<User> queryUserByUsername(String username);
+
+    int insertSelective(User user);
 
 }

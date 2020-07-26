@@ -68,6 +68,12 @@ public class IndexController {
         return "signup";
     }
 
+    @GetMapping("/student/add")
+    @ApiOperation(value = "go to add student page")
+    public String goAddKid(){
+        return "student/add_student";
+    }
+
 
 
     @GetMapping("/test")

@@ -1,10 +1,12 @@
 package com.bohan.service.impl;
 
 import com.bohan.entity.User;
+import com.bohan.exception.BaseResponseCodeImp;
 import com.bohan.exception.BusinessExceptionIpm;
 import com.bohan.mapper.UserMapper;
 import com.bohan.service.UserService;
 import com.bohan.vo.req.LoginReqVO;
+import com.bohan.vo.req.UserAddReqVO;
 import com.bohan.vo.resp.LoginRespVO;
 import com.bohan.vo.resp.StudentRespVO;
 import com.fasterxml.jackson.databind.BeanProperty;
@@ -12,7 +14,9 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -43,5 +47,31 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<User> queryAll() {
         return userMapper.queryAll();
+    }
+
+    @Override
+    public Boolean usernameIsExist(String username) {
+
+        List<User> users = userMapper.queryUserByUsername(username);
+
+        if (users.isEmpty()){
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    @Override
+    public void addUser(UserAddReqVO vo) {
+        User user = new User();
+
+        BeanUtils.copyProperties(vo,user);
+        user.setId(UUID.randomUUID().toString());
+        user.setCreateTime(new Date());
+
+        int i = userMapper.insertSelective(user);
+        if (i != 1){
+            throw new BusinessExceptionIpm(BaseResponseCodeImp.DATABSE_ERROR);
+        }
     }
 }

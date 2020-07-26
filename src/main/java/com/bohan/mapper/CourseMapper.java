@@ -10,7 +10,10 @@ public interface CourseMapper {
 
     List<Course> queryAll();
 
+    //其实可以删除
     List<CourseBaseInfo> queryBaseInfo();
 
     int insertSelective(Course course);
+
+
 }

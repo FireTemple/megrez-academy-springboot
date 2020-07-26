@@ -1,20 +1,13 @@
-package com.bohan.entity;
+package com.bohan.vo.req;
 
 import lombok.Data;
 
-import java.util.Date;
-
-
 @Data
-public class User {
+public class UserAddReqVO {
 
-
-    private String id;
     private String username;
     private String password;
     private String phone;
     private String email;
     private String address;
-    private Date createTime;
-
 }

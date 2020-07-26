@@ -10,4 +10,6 @@ public interface StudentMapper {
     List<Student> queryAll();
 
     List<Student> queryStudentsByUserId(String userId);
+
+    int insertSelective(Student student);
 }
