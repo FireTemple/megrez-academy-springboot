@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bohan.mapper.ScoreMapper">
+  <resultMap id="BaseResultMap" type="com.bohan.entity.Score">
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="c_id" jdbcType="VARCHAR" property="cId" />
+    <result column="student_id" jdbcType="VARCHAR" property="studentId" />
+    <result column="test_type" jdbcType="VARCHAR" property="testType" />
+    <result column="test_score" jdbcType="VARCHAR" property="testScore" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, c_id, student_id, test_type, test_score
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from score
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from score
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.bohan.entity.Score">
+    insert into score (id, c_id, student_id, 
+      test_type, test_score)
+    values (#{id,jdbcType=VARCHAR}, #{cId,jdbcType=VARCHAR}, #{studentId,jdbcType=VARCHAR}, 
+      #{testType,jdbcType=VARCHAR}, #{testScore,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.bohan.entity.Score">
+    insert into score
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="cId != null">
+        c_id,
+      </if>
+      <if test="studentId != null">
+        student_id,
+      </if>
+      <if test="testType != null">
+        test_type,
+      </if>
+      <if test="testScore != null">
+        test_score,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="cId != null">
+        #{cId,jdbcType=VARCHAR},
+      </if>
+      <if test="studentId != null">
+        #{studentId,jdbcType=VARCHAR},
+      </if>
+      <if test="testType != null">
+        #{testType,jdbcType=VARCHAR},
+      </if>
+      <if test="testScore != null">
+        #{testScore,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.bohan.entity.Score">
+    update score
+    <set>
+      <if test="cId != null">
+        c_id = #{cId,jdbcType=VARCHAR},
+      </if>
+      <if test="studentId != null">
+        student_id = #{studentId,jdbcType=VARCHAR},
+      </if>
+      <if test="testType != null">
+        test_type = #{testType,jdbcType=VARCHAR},
+      </if>
+      <if test="testScore != null">
+        test_score = #{testScore,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.bohan.entity.Score">
+    update score
+    set c_id = #{cId,jdbcType=VARCHAR},
+      student_id = #{studentId,jdbcType=VARCHAR},
+      test_type = #{testType,jdbcType=VARCHAR},
+      test_score = #{testScore,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

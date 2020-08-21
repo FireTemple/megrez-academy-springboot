@@ -24,7 +24,7 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     public List<Student> queryStudentByUserId(String userId) {
-        return studentMapper.queryStudentsByUserId(userId);
+        return studentMapper.queryStudentByUserId(userId);
     }
 
     @Override
@@ -42,9 +42,9 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     public void deleteStudent(String id) {
-        int i = studentMapper.deleteById(id);
+        int i = studentMapper.deleteByPrimaryKey(id);
         if (i != 1){
-            throw new BusinessExceptionIpm(BaseResponseCodeImp.DATABASE_ERROR_UPDATE);
+            throw new BusinessExceptionIpm(BaseResponseCodeImp.DATABASE_ERROR_DELETE);
         }
     }
 
@@ -53,10 +53,8 @@ public class StudentServiceImpl implements StudentService {
     public void updateStudentById(StudentUpdateReqVO vo) {
         Student student = new Student();
         BeanUtils.copyProperties(vo, student);
-        System.out.println("id:" + student.getId());
         int i = studentMapper.updateByPrimaryKeySelective(student);
         if (i != 1){
-            System.out.println("i: " + i);
             throw new BusinessExceptionIpm(BaseResponseCodeImp.DATABASE_ERROR_UPDATE);
         }
     }

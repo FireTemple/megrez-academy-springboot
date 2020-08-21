@@ -1,84 +1,74 @@
 package com.bohan.controller;
 
 
+import com.bohan.entity.Charge;
+import com.bohan.exception.BaseResponseCodeImp;
+import com.bohan.exception.BusinessExceptionIpm;
+import com.bohan.service.StripeService;
+import com.bohan.utils.Response;
+import com.bohan.vo.req.PaymentRepVO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletRequest;
 
 @Controller
 @Api(tags = "views")
 @RequestMapping("/index")
 public class IndexController {
 
-    @GetMapping("/404")
-    @ApiOperation(value = "404 error page")
-    public String error404(){
-        return "error/404";
-    }
+    @Value("${stripe.keys.public}")
+    private String API_PUBLIC_KEY;
 
-    @GetMapping("/login")
-    @ApiOperation(value = "login page")
-    public String login(){
-        return "login";
-    }
+    @Autowired
+    private StripeService stripeService;
 
-    @GetMapping("/home")
-    @ApiOperation(value = "home page")
-    public String goHome(){
-        return "home";
-    }
 
-    @GetMapping("/main")
-    @ApiOperation(value = "main page when user just login")
-    public String goMain(){
-        return "main";
-    }
 
-    @GetMapping("/user")
-    @ApiOperation(value = "user page")
-    public String goUser(){
-        return "user/user";
-    }
-
-    @GetMapping("/course")
-    @ApiOperation(value = "go to course page")
-    public String goCourse(){
-        return "course/course";
-    }
-
-    @GetMapping("/student")
-    @ApiOperation(value = "go to student page")
-    public String goStudent(){
-        return "student/student";
-    }
-
-    @GetMapping("/course/add")
-    @ApiOperation(value = "go to add course page")
-    public String goRegister(){
-        return "course/add_course";
+    @GetMapping("/subscription")
+    public String subscriptionPage(Model model) {
+        model.addAttribute("stripePublicKey", API_PUBLIC_KEY);
+        return "subscription";
     }
 
 
 
-    @GetMapping("/signup")
-    @ApiOperation(value = "go to signup page")
-    public String goSignup(){
-        return "signup";
+
+    @PostMapping("/charge")
+    @CrossOrigin
+    public String chargePage(Model model,PaymentRepVO paymentRepVO) {
+        model.addAttribute("stripePublicKey", API_PUBLIC_KEY);
+        model.addAttribute("courseInfo",paymentRepVO);
+        System.out.println(paymentRepVO.getId());
+        System.out.println(paymentRepVO.getName());
+        return "charge";
     }
 
-    @GetMapping("/student/add")
-    @ApiOperation(value = "go to add student page")
-    public String goAddKid(){
-        return "student/add_student";
-    }
 
+    @PostMapping("/create-charge")
+    public @ResponseBody
+    Response createCharge(String studentId, String token, String price, String courseId, String userId) {
+        //validate data
+        if (studentId == null || price == null || courseId == null || userId == null){
+            throw new BusinessExceptionIpm(BaseResponseCodeImp.DATA_MISSING);
+        }
 
+        if (token == null) {
+            return new Response(false, "Stripe payment token is missing. Please, try again later.");
+        }
+        //create charge
+        Charge charge = stripeService.createCharge(userId, token, Integer.parseInt(price)*100, studentId, courseId);
+        if (charge == null) {
+            return new Response(false, "An error occurred while trying to create a charge.");
+        }
 
-    @GetMapping("/test")
-    @ApiOperation(value = "go to test page")
-    public String goTest(){
-        return "test";
+        // You may want to store charge id along with order information
+
+        return new Response(true, "Success! Your charge id is " + charge.getId());
     }
 }

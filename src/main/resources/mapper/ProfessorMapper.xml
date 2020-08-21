@@ -1,17 +1,200 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-
 <mapper namespace="com.bohan.mapper.ProfessorMapper">
+  <resultMap id="BaseResultMap" type="com.bohan.entity.Professor">
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="first_name" jdbcType="VARCHAR" property="firstName" />
+    <result column="last_name" jdbcType="VARCHAR" property="lastName" />
+    <result column="phone" jdbcType="VARCHAR" property="phone" />
+    <result column="email" jdbcType="VARCHAR" property="email" />
+    <result column="status" jdbcType="TINYINT" property="status" />
+    <result column="education" jdbcType="VARCHAR" property="education" />
+    <result column="major" jdbcType="VARCHAR" property="major" />
+    <result column="years" jdbcType="TINYINT" property="years" />
+    <result column="level" jdbcType="TINYINT" property="level" />
+    <result column="w9" jdbcType="TINYINT" property="w9" />
+    <result column="resume" jdbcType="TINYINT" property="resume" />
+    <result column="form_1099" jdbcType="TINYINT" property="form1099" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, first_name, last_name, phone, email, `status`, education, major, `years`, `level`, 
+    w9, resume, form_1099
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from professor
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from professor
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.bohan.entity.Professor">
+    insert into professor (id, first_name, last_name, 
+      phone, email, `status`, 
+      education, major, `years`, 
+      `level`, w9, resume, 
+      form_1099)
+    values (#{id,jdbcType=VARCHAR}, #{firstName,jdbcType=VARCHAR}, #{lastName,jdbcType=VARCHAR}, 
+      #{phone,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, #{status,jdbcType=TINYINT}, 
+      #{education,jdbcType=VARCHAR}, #{major,jdbcType=VARCHAR}, #{years,jdbcType=TINYINT}, 
+      #{level,jdbcType=TINYINT}, #{w9,jdbcType=TINYINT}, #{resume,jdbcType=TINYINT}, 
+      #{form1099,jdbcType=TINYINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.bohan.entity.Professor">
+    insert into professor
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="firstName != null">
+        first_name,
+      </if>
+      <if test="lastName != null">
+        last_name,
+      </if>
+      <if test="phone != null">
+        phone,
+      </if>
+      <if test="email != null">
+        email,
+      </if>
+      <if test="status != null">
+        `status`,
+      </if>
+      <if test="education != null">
+        education,
+      </if>
+      <if test="major != null">
+        major,
+      </if>
+      <if test="years != null">
+        `years`,
+      </if>
+      <if test="level != null">
+        `level`,
+      </if>
+      <if test="w9 != null">
+        w9,
+      </if>
+      <if test="resume != null">
+        resume,
+      </if>
+      <if test="form1099 != null">
+        form_1099,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="firstName != null">
+        #{firstName,jdbcType=VARCHAR},
+      </if>
+      <if test="lastName != null">
+        #{lastName,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null">
+        #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null">
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=TINYINT},
+      </if>
+      <if test="education != null">
+        #{education,jdbcType=VARCHAR},
+      </if>
+      <if test="major != null">
+        #{major,jdbcType=VARCHAR},
+      </if>
+      <if test="years != null">
+        #{years,jdbcType=TINYINT},
+      </if>
+      <if test="level != null">
+        #{level,jdbcType=TINYINT},
+      </if>
+      <if test="w9 != null">
+        #{w9,jdbcType=TINYINT},
+      </if>
+      <if test="resume != null">
+        #{resume,jdbcType=TINYINT},
+      </if>
+      <if test="form1099 != null">
+        #{form1099,jdbcType=TINYINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.bohan.entity.Professor">
+    update professor
+    <set>
+      <if test="firstName != null">
+        first_name = #{firstName,jdbcType=VARCHAR},
+      </if>
+      <if test="lastName != null">
+        last_name = #{lastName,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null">
+        phone = #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null">
+        email = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        `status` = #{status,jdbcType=TINYINT},
+      </if>
+      <if test="education != null">
+        education = #{education,jdbcType=VARCHAR},
+      </if>
+      <if test="major != null">
+        major = #{major,jdbcType=VARCHAR},
+      </if>
+      <if test="years != null">
+        `years` = #{years,jdbcType=TINYINT},
+      </if>
+      <if test="level != null">
+        `level` = #{level,jdbcType=TINYINT},
+      </if>
+      <if test="w9 != null">
+        w9 = #{w9,jdbcType=TINYINT},
+      </if>
+      <if test="resume != null">
+        resume = #{resume,jdbcType=TINYINT},
+      </if>
+      <if test="form1099 != null">
+        form_1099 = #{form1099,jdbcType=TINYINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.bohan.entity.Professor">
+    update professor
+    set first_name = #{firstName,jdbcType=VARCHAR},
+      last_name = #{lastName,jdbcType=VARCHAR},
+      phone = #{phone,jdbcType=VARCHAR},
+      email = #{email,jdbcType=VARCHAR},
+      `status` = #{status,jdbcType=TINYINT},
+      education = #{education,jdbcType=VARCHAR},
+      major = #{major,jdbcType=VARCHAR},
+      `years` = #{years,jdbcType=TINYINT},
+      `level` = #{level,jdbcType=TINYINT},
+      w9 = #{w9,jdbcType=TINYINT},
+      resume = #{resume,jdbcType=TINYINT},
+      form_1099 = #{form1099,jdbcType=TINYINT}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
 
-    <resultMap id="name_id" type="com.bohan.vo.resp.CourseProfessorRespVO">
-        <id column="id" jdbcType="VARCHAR" property="id" />
-        <result column="id" jdbcType="VARCHAR" property="id"/>
-        <result column="first_name" jdbcType="VARCHAR" property="firstName"/>
-        <result column="last_name" jdbcType="VARCHAR" property="lastName"/>
-    </resultMap>
+  <select id="queryAll" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from professor
+  </select>
 
-
-    <select id="queryAllProfessorName" resultMap="name_id">
-        select id, first_name,last_name from professor
-    </select>
+  <select id="queryAllBasicInfo" resultMap="BaseResultMap">
+    select
+    id, last_name, first_name
+    from professor
+  </select>
 </mapper>

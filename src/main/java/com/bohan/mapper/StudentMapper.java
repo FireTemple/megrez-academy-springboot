@@ -1,19 +1,21 @@
 package com.bohan.mapper;
 
-
 import com.bohan.entity.Student;
 
 import java.util.List;
 
 public interface StudentMapper {
+    int deleteByPrimaryKey(String id);
 
-    List<Student> queryAll();
+    int insert(Student record);
 
-    List<Student> queryStudentsByUserId(String userId);
+    int insertSelective(Student record);
 
-    int insertSelective(Student student);
+    Student selectByPrimaryKey(String id);
 
-    int deleteById(String id);
+    int updateByPrimaryKeySelective(Student record);
 
-    int updateByPrimaryKeySelective(Student student);
+    int updateByPrimaryKey(Student record);
+
+    List<Student> queryStudentByUserId(String userId);
 }

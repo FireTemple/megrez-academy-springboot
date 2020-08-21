@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bohan.mapper.StudentCourseMapper">
+  <resultMap id="BaseResultMap" type="com.bohan.entity.StudentCourse">
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="s_id" jdbcType="VARCHAR" property="sId" />
+    <result column="c_id" jdbcType="VARCHAR" property="cId" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, s_id, c_id
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from student_course
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from student_course
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.bohan.entity.StudentCourse">
+    insert into student_course (id, s_id, c_id)
+    values (#{id,jdbcType=VARCHAR}, #{sId,jdbcType=VARCHAR}, #{cId,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.bohan.entity.StudentCourse">
+    insert into student_course
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="sId != null">
+        s_id,
+      </if>
+      <if test="cId != null">
+        c_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="sId != null">
+        #{sId,jdbcType=VARCHAR},
+      </if>
+      <if test="cId != null">
+        #{cId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.bohan.entity.StudentCourse">
+    update student_course
+    <set>
+      <if test="sId != null">
+        s_id = #{sId,jdbcType=VARCHAR},
+      </if>
+      <if test="cId != null">
+        c_id = #{cId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.bohan.entity.StudentCourse">
+    update student_course
+    set s_id = #{sId,jdbcType=VARCHAR},
+      c_id = #{cId,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+
+  <select id="findRecord" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select *
+    from student_course
+    where c_id = #{courseId, jdbcType=VARCHAR} and s_id = #{studentId, jdbcType=VARCHAR}
+  </select>
+</mapper>

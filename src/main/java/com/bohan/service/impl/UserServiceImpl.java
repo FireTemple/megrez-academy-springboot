@@ -8,8 +8,6 @@ import com.bohan.service.UserService;
 import com.bohan.vo.req.LoginReqVO;
 import com.bohan.vo.req.UserAddReqVO;
 import com.bohan.vo.resp.LoginRespVO;
-import com.bohan.vo.resp.StudentRespVO;
-import com.fasterxml.jackson.databind.BeanProperty;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,18 +26,16 @@ public class UserServiceImpl implements UserService {
     public LoginRespVO login(LoginReqVO loginReqVO) {
         LoginRespVO loginRespVO = new LoginRespVO();
 
-        if (loginReqVO.getUsername().equals("dev")){
-            if (loginReqVO.getPassword().equals("111")){
-                BeanUtils.copyProperties(loginRespVO,loginReqVO);
-//                loginRespVO.setEmail("gk6511@wayne.edu");
-                loginRespVO.setUserId("1");
-                return loginRespVO;
-            } else {
-                throw new BusinessExceptionIpm(30000,"password incorrect");
-            }
-        } else {
-            throw new BusinessExceptionIpm(300001, "user dose not exist");
+        User user = userMapper.selectByUsername(loginReqVO.getUsername());
+        if (user == null) {
+            throw new BusinessExceptionIpm(100001,"username dose not exist");
         }
+        if (!user.getPassword().equals(loginReqVO.getPassword())){
+            throw new BusinessExceptionIpm(100002,"password dose not match");
+        }
+
+        BeanUtils.copyProperties(user, loginRespVO);
+        return loginRespVO;
 
     }
 
@@ -52,9 +48,9 @@ public class UserServiceImpl implements UserService {
     @Override
     public Boolean usernameIsExist(String username) {
 
-        List<User> users = userMapper.queryUserByUsername(username);
+        User user = userMapper.selectByUsername(username);
 
-        if (users.isEmpty()){
+        if (user == null){
             return false;
         } else {
             return true;
@@ -67,11 +63,32 @@ public class UserServiceImpl implements UserService {
 
         BeanUtils.copyProperties(vo,user);
         user.setId(UUID.randomUUID().toString());
-        user.setCreateTime(new Date());
+        user.setCreateTime(new Date().toString());
 
         int i = userMapper.insertSelective(user);
         if (i != 1){
             throw new BusinessExceptionIpm(BaseResponseCodeImp.DATABASE_ERROR_INSERT);
         }
+    }
+
+    @Override
+    public void waveUser(String id) {
+        int i = userMapper.deleteByPrimaryKey(id);
+        if (i != 1) {
+            throw new BusinessExceptionIpm(BaseResponseCodeImp.DATABASE_ERROR_DELETE);
+        }
+    }
+
+    @Override
+    public void updateUser(User user) {
+        int i = userMapper.updateByPrimaryKeySelective(user);
+        if (i != i){
+            throw new BusinessExceptionIpm(BaseResponseCodeImp.DATABASE_ERROR_INSERT);
+        }
+    }
+
+    @Override
+    public User queryById(String id) {
+        return userMapper.selectByPrimaryKey(id);
     }
 }

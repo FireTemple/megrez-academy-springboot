@@ -1,118 +1,174 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-
 <mapper namespace="com.bohan.mapper.StudentMapper">
-    <resultMap id="BaseResultMap" type="com.bohan.entity.Student">
-        <id column="id" jdbcType="VARCHAR" property="id" />
-        <result column="first_name" jdbcType="VARCHAR" property="firstName"/>
-        <result column="last_name" jdbcType="VARCHAR" property="lastName"/>
-        <result column="birth" jdbcType="VARCHAR" property="birth"/>
-        <result column="gender" jdbcType="VARCHAR" property="gender"/>
-        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
-    </resultMap>
+  <resultMap id="BaseResultMap" type="com.bohan.entity.Student">
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="p_id" jdbcType="VARCHAR" property="pId" />
+    <result column="first_name" jdbcType="VARCHAR" property="firstName" />
+    <result column="last_name" jdbcType="VARCHAR" property="lastName" />
+    <result column="birth" jdbcType="VARCHAR" property="birth" />
+    <result column="gender" jdbcType="TINYINT" property="gender" />
+    <result column="email" jdbcType="VARCHAR" property="email" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="status" jdbcType="VARCHAR" property="status" />
+    <result column="curent_school" jdbcType="VARCHAR" property="curentSchool" />
+    <result column="curent_grade" jdbcType="VARCHAR" property="curentGrade" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, p_id, first_name, last_name, birth, gender, email, create_time, `status`, curent_school, 
+    curent_grade
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from student
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from student
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.bohan.entity.Student">
+    insert into student (id, p_id, first_name, 
+      last_name, birth, gender, 
+      email, create_time, `status`, 
+      curent_school, curent_grade)
+    values (#{id,jdbcType=VARCHAR}, #{pId,jdbcType=VARCHAR}, #{firstName,jdbcType=VARCHAR}, 
+      #{lastName,jdbcType=VARCHAR}, #{birth,jdbcType=VARCHAR}, #{gender,jdbcType=TINYINT}, 
+      #{email,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{status,jdbcType=VARCHAR}, 
+      #{curentSchool,jdbcType=VARCHAR}, #{curentGrade,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.bohan.entity.Student">
+    insert into student
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="pId != null">
+        p_id,
+      </if>
+      <if test="firstName != null">
+        first_name,
+      </if>
+      <if test="lastName != null">
+        last_name,
+      </if>
+      <if test="birth != null">
+        birth,
+      </if>
+      <if test="gender != null">
+        gender,
+      </if>
+      <if test="email != null">
+        email,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="status != null">
+        `status`,
+      </if>
+      <if test="curentSchool != null">
+        curent_school,
+      </if>
+      <if test="curentGrade != null">
+        curent_grade,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="pId != null">
+        #{pId,jdbcType=VARCHAR},
+      </if>
+      <if test="firstName != null">
+        #{firstName,jdbcType=VARCHAR},
+      </if>
+      <if test="lastName != null">
+        #{lastName,jdbcType=VARCHAR},
+      </if>
+      <if test="birth != null">
+        #{birth,jdbcType=VARCHAR},
+      </if>
+      <if test="gender != null">
+        #{gender,jdbcType=TINYINT},
+      </if>
+      <if test="email != null">
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="curentSchool != null">
+        #{curentSchool,jdbcType=VARCHAR},
+      </if>
+      <if test="curentGrade != null">
+        #{curentGrade,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.bohan.entity.Student">
+    update student
+    <set>
+      <if test="pId != null">
+        p_id = #{pId,jdbcType=VARCHAR},
+      </if>
+      <if test="firstName != null">
+        first_name = #{firstName,jdbcType=VARCHAR},
+      </if>
+      <if test="lastName != null">
+        last_name = #{lastName,jdbcType=VARCHAR},
+      </if>
+      <if test="birth != null">
+        birth = #{birth,jdbcType=VARCHAR},
+      </if>
+      <if test="gender != null">
+        gender = #{gender,jdbcType=TINYINT},
+      </if>
+      <if test="email != null">
+        email = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null">
+        `status` = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="curentSchool != null">
+        curent_school = #{curentSchool,jdbcType=VARCHAR},
+      </if>
+      <if test="curentGrade != null">
+        curent_grade = #{curentGrade,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.bohan.entity.Student">
+    update student
+    set p_id = #{pId,jdbcType=VARCHAR},
+      first_name = #{firstName,jdbcType=VARCHAR},
+      last_name = #{lastName,jdbcType=VARCHAR},
+      birth = #{birth,jdbcType=VARCHAR},
+      gender = #{gender,jdbcType=TINYINT},
+      email = #{email,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      `status` = #{status,jdbcType=VARCHAR},
+      curent_school = #{curentSchool,jdbcType=VARCHAR},
+      curent_grade = #{curentGrade,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
 
-    <sql id="Base_Column_List">
-        id, first_name, last_name, birth, gender
-    </sql>
 
-    <select id="queryAll" resultMap="BaseResultMap" >
-        select <include refid="Base_Column_List"></include>
-        from student
-        where status = 1
-    </select>
-
-    <select id="queryStudentsByUserId" resultMap="BaseResultMap" parameterType="java.lang.String">
-        select <include refid="Base_Column_List"></include>
-        from student
-        <where>
-            p_id = #{userId} and status = 1
-        </where>
-    </select>
-
-    <insert id="insertSelective" parameterType="com.bohan.entity.Student">
-        insert into student
-        <trim prefix="(" suffix=")" suffixOverrides=",">
-            <if test="id != null">
-                id,
-            </if>
-            <if test="pId != null">
-                p_id,
-            </if>
-            <if test="firstName != null">
-                first_name,
-            </if>
-            <if test="lastName != null">
-                last_name,
-            </if>
-            <if test="birth != null">
-                birth,
-            </if>
-            <if test="gender != null">
-                gender,
-            </if>
-            <if test="email != null">
-                email,
-            </if>
-            <if test="createTime != null">
-                create_time,
-            </if>
-        </trim>
-        <trim prefix="values (" suffix=")" suffixOverrides=",">
-            <if test="id != null">
-                #{id,jdbcType=VARCHAR},
-            </if>
-            <if test="pId != null">
-                #{pId,jdbcType=VARCHAR},
-            </if>
-            <if test="firstName != null">
-                #{firstName,jdbcType=VARCHAR},
-            </if>
-            <if test="lastName != null">
-                #{lastName,jdbcType=VARCHAR},
-            </if>
-            <if test="birth != null">
-                #{birth,jdbcType=VARCHAR},
-            </if>
-            <if test="email!= null">
-                #{email,jdbcType=VARCHAR},
-            </if>
-            <if test="gender != null">
-                #{gender,jdbcType=VARCHAR},
-            </if>
-            <if test="createTime != null">
-                #{createTime,jdbcType=TIMESTAMP},
-            </if>
-        </trim>
-    </insert>
-
-    <update id="deleteById" parameterType="java.lang.String">
-        update student
-        set status = 2
-        where id = #{id}
-    </update>
-
-
-    <update id="updateByPrimaryKeySelective" parameterType="com.bohan.entity.Student">
-        update student
-        <set>
-            <if test="firstName != null">
-                first_name = #{firstName,jdbcType=VARCHAR},
-            </if>
-            <if test="lastName != null">
-                last_name = #{lastName,jdbcType=VARCHAR},
-            </if>
-            <if test="birth != null">
-                birth = #{birth,jdbcType=VARCHAR},
-            </if>
-            <if test="gender != null">
-                gender = #{gender,jdbcType=VARCHAR},
-            </if>
-            <if test="email != null">
-                email = #{email,jdbcType=VARCHAR},
-            </if>
-        </set>
-        where id = #{id,jdbcType=VARCHAR}
-    </update>
+  <select id="queryStudentByUserId" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from student
+    where p_id = #{userId,jdbcType=VARCHAR}
+  </select>
 
 
 </mapper>

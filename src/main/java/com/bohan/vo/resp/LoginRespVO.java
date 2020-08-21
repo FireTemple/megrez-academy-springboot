@@ -7,9 +7,9 @@ public class LoginRespVO {
 
     private String userId;
 
-//    private String username;
-//
-//    private String lastname;
-//
-//    private String email;
+    private String username;
+
+    private String lastname;
+
+    private String email;
 }
