@@ -15,4 +15,7 @@ public interface ChargeService {
     void cancelCourse(List<String> charges);
 
     void triggerCourse(List<String> charges);
+
+    Charge queryById(String id);
+
 }

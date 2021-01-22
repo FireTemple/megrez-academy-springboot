@@ -12,4 +12,7 @@ public class StudentUpdateReqVO {
     private String birth;
     private String gender;
     private String email;
+    private String pId;
+    private String currentSchool;
+    private String currentGrade;
 }

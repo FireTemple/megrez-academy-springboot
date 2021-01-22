@@ -3,9 +3,12 @@ package com.bohan.controller;
 import com.bohan.entity.Course;
 import com.bohan.service.impl.CourseServiceImpl;
 import com.bohan.service.impl.CourseStudentServiceImpl;
+import com.bohan.utils.PageUtil;
 import com.bohan.utils.ResultData;
 import com.bohan.vo.req.CourseAddReqVO;
 import com.bohan.vo.req.CourseUpdateReqVO;
+import com.bohan.vo.req.PageReqVO;
+import com.github.pagehelper.PageHelper;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,19 +25,21 @@ public class CourseController {
     @Autowired
     CourseStudentServiceImpl courseStudentService;
 
-    @GetMapping("/courses")
+    @PostMapping("/courses")
     @ApiOperation(value = "query all course")
-    public ResultData queryAll(){
+    public ResultData queryAll(@RequestBody PageReqVO pageReqVO){
         ResultData result = ResultData.success();
-        result.setData(courseService.queryAll());
+        PageHelper.startPage(pageReqVO.getPageNum(), pageReqVO.getPageSize());
+        result.setData(PageUtil.getPageVO(courseService.queryAll(pageReqVO)));
         return result;
     }
 
     @GetMapping("/courses/baseInfo")
     @ApiOperation(value = "query basic information for register")
-    public ResultData queryBaseInfo(){
+    public ResultData queryBaseInfo(@RequestBody PageReqVO pageReqVO){
         ResultData result = ResultData.success();
-        result.setData(courseService.queryAll());
+        PageHelper.startPage(pageReqVO.getPageNum(), pageReqVO.getPageSize());
+        result.setData(PageUtil.getPageVO(courseService.queryAll(pageReqVO)));
         return result;
     }
 
@@ -79,5 +84,21 @@ public class CourseController {
         ResultData resultData = ResultData.success();
         resultData.setData(courseService.queryAllByAdmin());
         return resultData;
+    }
+
+    @GetMapping("/current/courses")
+    @ApiOperation(value = "query current courses")
+    public ResultData queryCurrentCourses(){
+        ResultData resultData = ResultData.success();
+        resultData.setData(courseService.queryCurrentCourse());
+        return resultData;
+    }
+
+    @GetMapping("/course/start/{id}")
+    @ApiOperation(value = "start a course")
+    public ResultData startCourseById(@PathVariable("id") String id){
+        ResultData result = ResultData.success();
+        courseService.startCourse(id);
+        return  result;
     }
 }

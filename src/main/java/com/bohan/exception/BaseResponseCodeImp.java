@@ -13,10 +13,13 @@ public enum BaseResponseCodeImp implements BaseResponseCode{
     DATABASE_ERROR_UPDATE(400002,"update error"),
     DATABASE_ERROR_DELETE(400003,"delete error"),
     DATABASE_ERROR_QUERY_COURSE(400004,"course is not exist"),
+    PAYMENT_ERROR_TOKENMISSING(5000001,"token missing"),
+    PAYMENT_ERROR_CHARGE_ERROR(5000002,"charge create error, pleases try later")
     //error start with 1 means it is data error
     //error start with 2 means it is system error
     //error start with 3 means login error
     //error start with 4 means database error
+    //error start with 8 menas payment error
     ;
 
 

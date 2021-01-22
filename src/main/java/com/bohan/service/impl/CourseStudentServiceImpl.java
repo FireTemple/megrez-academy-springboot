@@ -6,6 +6,7 @@ import com.bohan.exception.BusinessExceptionIpm;
 import com.bohan.mapper.StudentCourseMapper;
 import com.bohan.service.CourseStudentService;
 import com.bohan.vo.resp.CourseStudentRespVO;
+import com.bohan.vo.resp.StudentQueryAllRespVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -28,7 +29,7 @@ public class CourseStudentServiceImpl implements CourseStudentService {
     public void registerCourse(String studentId, String courseId) {
         StudentCourse studentCourse = new StudentCourse();
         studentCourse.setId(UUID.randomUUID().toString());
-
+        System.out.println("studentId in register:" + studentId);
         studentCourse.setcId(courseId);
         studentCourse.setsId(studentId);
 
@@ -50,4 +51,14 @@ public class CourseStudentServiceImpl implements CourseStudentService {
         if (record != null) return 1;
         else return 0;
     }
+
+
+    @Override
+    public List<StudentQueryAllRespVO> queryAllByCourseId(String courseId) {
+        return studentCourseMapper.findStudentsByCourseId(courseId);
+    }
+
+
+
+
 }

@@ -16,16 +16,18 @@ public class RedisConfig {
         // 固定代码
         RedisTemplate<String, Object> template = new RedisTemplate<>();
         template.setConnectionFactory(redisConnectionFactory);
+
         // 配置两种序列化模式
         StringRedisSerializer stringRedisSerializer = new StringRedisSerializer();
         MyStringRedisSerialize myStringRedisSerialize = new MyStringRedisSerialize();
+
 
         template.setKeySerializer(stringRedisSerializer);
         template.setValueSerializer(myStringRedisSerialize);
         template.setHashKeySerializer(stringRedisSerializer);
         template.setHashValueSerializer(myStringRedisSerialize);
 
-        return template;
 
+        return template;
     }
 }

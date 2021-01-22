@@ -2,6 +2,7 @@ package com.bohan.service.impl;
 
 
 import com.bohan.entity.Course;
+import com.bohan.entity.Student;
 import com.bohan.exception.BaseResponseCode;
 import com.bohan.exception.BaseResponseCodeImp;
 import com.bohan.exception.BusinessExceptionIpm;
@@ -9,8 +10,10 @@ import com.bohan.mapper.CourseMapper;
 import com.bohan.service.CourseService;
 import com.bohan.vo.req.CourseAddReqVO;
 import com.bohan.vo.req.CourseUpdateReqVO;
+import com.bohan.vo.req.PageReqVO;
 import com.bohan.vo.resp.CourseBaseInfo;
 import com.bohan.vo.resp.CoursesAdminQueryRespVO;
+import com.bohan.vo.resp.PageVO;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -27,8 +30,8 @@ public class CourseServiceImpl implements CourseService {
     CourseMapper courseMapper;
 
     @Override
-    public List<Course> queryAll() {
-        return courseMapper.queryAll();
+    public List<Course> queryAll(PageReqVO pageReqVO) {
+        return courseMapper.queryAll(pageReqVO);
     }
 
 
@@ -76,5 +79,20 @@ public class CourseServiceImpl implements CourseService {
             throw new BusinessExceptionIpm(BaseResponseCodeImp.DATABASE_ERROR_QUERY_COURSE);
         }
         return coursesAdminQueryRespVO;
+    }
+
+    @Override
+    public List<CoursesAdminQueryRespVO> queryCurrentCourse() {
+        return courseMapper.queryCurrentCourse();
+    }
+
+    @Override
+    public void startCourse(String id) {
+        int i = courseMapper.startCourseByCourseId(id);
+
+        if (i != 1){
+            throw new BusinessExceptionIpm(BaseResponseCodeImp.DATABASE_ERROR_UPDATE);
+        }
+
     }
 }

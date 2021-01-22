@@ -5,11 +5,8 @@ import lombok.Data;
 @Data
 public class LoginRespVO {
 
-    private String userId;
+    private String id;
 
-    private String username;
+    private String role;
 
-    private String lastname;
-
-    private String email;
 }

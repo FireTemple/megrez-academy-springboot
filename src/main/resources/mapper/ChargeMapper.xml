@@ -132,10 +132,10 @@
     from charge
   </select>
 
-  <select id="queryByCourseId"  resultMap="BaseResultMap">
+  <select id="queryByCourseId" resultType="java.lang.String">
     select id
     from charge
-    where c_id = #{courseId, jdbcType=VARCHAR}
+    where c_id = #{courseId, jdbcType=VARCHAR} and status = '1'
   </select>
   
   <update id="cancelCharge" parameterType="java.lang.String">
@@ -149,5 +149,11 @@
     set `status` = '2'
     where id = #{id,jdbcType=VARCHAR}
   </update>
+
+  <select id="queryById"  resultType="com.bohan.entity.Charge">
+    select *
+    from charge
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
 
 </mapper>

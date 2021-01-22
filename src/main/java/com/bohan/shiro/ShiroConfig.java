@@ -15,7 +15,6 @@ public class ShiroConfig {
 
 
 
-    @Bean
     public ShiroFilterFactoryBean getShiroFilterFactoryBean(@Qualifier("manager") DefaultWebSecurityManager defaultWebSecurityManager){
         ShiroFilterFactoryBean factoryBean = new ShiroFilterFactoryBean();
         factoryBean.setSecurityManager(defaultWebSecurityManager);
@@ -29,9 +28,10 @@ public class ShiroConfig {
          * perms: 必须有某个资源的quanxian
          * role: 必须有角色
          */
-
+//
         filter.put("/index/**","anon");
         filter.put("/images/**", "anon");
+        filter.put("/static/**", "anon");
         filter.put("/js/**", "anon");
         filter.put("/layui/**", "anon");
         filter.put("/css/**", "anon");
@@ -42,9 +42,9 @@ public class ShiroConfig {
         filter.put("/swagger-resources/**", "anon");
 
 
-//        filter.put("/**", "authc");
+        filter.put("/**", "authc");
 
-        factoryBean.setLoginUrl("/index/login");
+        factoryBean.setLoginUrl("/");
         factoryBean.setFilterChainDefinitionMap(filter);
 
 

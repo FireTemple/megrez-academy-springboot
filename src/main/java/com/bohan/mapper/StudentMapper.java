@@ -1,6 +1,7 @@
 package com.bohan.mapper;
 
 import com.bohan.entity.Student;
+import com.bohan.vo.resp.StudentQueryAllRespVO;
 
 import java.util.List;
 
@@ -17,5 +18,10 @@ public interface StudentMapper {
 
     int updateByPrimaryKey(Student record);
 
-    List<Student> queryStudentByUserId(String userId);
+    List<StudentQueryAllRespVO> queryStudentByUserId(String userId);
+
+    List<Student> queryAll();
+
+    StudentQueryAllRespVO queryMoreInfoByStudentId(String id);
+    List<StudentQueryAllRespVO> queryMoreInfoByCourseId(String id);
 }

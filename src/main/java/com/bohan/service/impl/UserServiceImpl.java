@@ -27,6 +27,7 @@ public class UserServiceImpl implements UserService {
         LoginRespVO loginRespVO = new LoginRespVO();
 
         User user = userMapper.selectByUsername(loginReqVO.getUsername());
+
         if (user == null) {
             throw new BusinessExceptionIpm(100001,"username dose not exist");
         }
@@ -35,6 +36,12 @@ public class UserServiceImpl implements UserService {
         }
 
         BeanUtils.copyProperties(user, loginRespVO);
+        if (user.getUsername().equals("admin")){
+            loginRespVO.setRole("admin");
+        } else{
+            loginRespVO.setRole("user");
+        }
+
         return loginRespVO;
 
     }

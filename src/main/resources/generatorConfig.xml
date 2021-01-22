@@ -49,21 +49,21 @@
         </javaClientGenerator>
 
 
-        <table tableName="charge" domainObjectName="Charge"
-               enableCountByExample="false"
-               enableUpdateByExample="false"
-               enableDeleteByExample="false"
-               enableSelectByExample="false"
-               selectByExampleQueryId="true">
-            <columnOverride column="id" javaType="java.lang.String"/>
-            <columnOverride column="s_id" javaType="java.lang.String"/>
-            <columnOverride column="p_id" javaType="java.lang.String"/>
-            <columnOverride column="c_id" javaType="java.lang.String"/>
-            <columnOverride column="token" javaType="java.lang.String"/>
-            <columnOverride column="amount" javaType="java.lang.String"/>
-            <columnOverride column="status" javaType="java.lang.String"/>
-            <columnOverride column="create_time" javaType="java.lang.String"/>
-        </table>
+<!--        <table tableName="charge" domainObjectName="Charge"-->
+<!--               enableCountByExample="false"-->
+<!--               enableUpdateByExample="false"-->
+<!--               enableDeleteByExample="false"-->
+<!--               enableSelectByExample="false"-->
+<!--               selectByExampleQueryId="true">-->
+<!--            <columnOverride column="id" javaType="java.lang.String"/>-->
+<!--            <columnOverride column="s_id" javaType="java.lang.String"/>-->
+<!--            <columnOverride column="p_id" javaType="java.lang.String"/>-->
+<!--            <columnOverride column="c_id" javaType="java.lang.String"/>-->
+<!--            <columnOverride column="token" javaType="java.lang.String"/>-->
+<!--            <columnOverride column="amount" javaType="java.lang.String"/>-->
+<!--            <columnOverride column="status" javaType="java.lang.String"/>-->
+<!--            <columnOverride column="create_time" javaType="java.lang.String"/>-->
+<!--        </table>-->
 
 <!--        <table tableName="payment_history" domainObjectName="PaymentHistory"-->
 <!--               enableCountByExample="false"-->
@@ -109,15 +109,23 @@
 <!--            <columnOverride column="test_score" javaType="java.lang.String"/>-->
 <!--        </table>-->
 
-<!--        <table tableName="student" domainObjectName="Student"-->
-<!--               enableCountByExample="false"-->
-<!--               enableUpdateByExample="false"-->
-<!--               enableDeleteByExample="false"-->
-<!--               enableSelectByExample="false"-->
-<!--               selectByExampleQueryId="true">-->
-<!--            <columnOverride column="student_id" javaType="java.lang.String"/>-->
-<!--            <columnOverride column="score_id" javaType="java.lang.String"/>-->
-<!--        </table>-->
+        <table tableName="student" domainObjectName="Student"
+               enableCountByExample="false"
+               enableUpdateByExample="false"
+               enableDeleteByExample="false"
+               enableSelectByExample="false"
+               selectByExampleQueryId="true">
+            <columnOverride column="id" javaType="java.lang.String"/>
+            <columnOverride column="p_id" javaType="java.lang.String"/>
+            <columnOverride column="first_name" javaType="java.lang.String"/>
+            <columnOverride column="last_name" javaType="java.lang.String"/>
+            <columnOverride column="birth" javaType="java.lang.String"/>
+            <columnOverride column="gender" javaType="java.lang.String"/>
+            <columnOverride column="email" javaType="java.lang.String"/>
+            <columnOverride column="status" javaType="java.lang.String"/>
+            <columnOverride column="current_school" javaType="java.lang.String"/>
+            <columnOverride column="current_grade" javaType="java.lang.String"/>
+        </table>
 
 <!--        <table tableName="student_course" domainObjectName="StudentCourse"-->
 <!--               enableCountByExample="false"-->

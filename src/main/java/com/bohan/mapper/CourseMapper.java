@@ -1,6 +1,7 @@
 package com.bohan.mapper;
 
 import com.bohan.entity.Course;
+import com.bohan.vo.req.PageReqVO;
 import com.bohan.vo.resp.CoursesAdminQueryRespVO;
 
 import java.util.List;
@@ -21,7 +22,13 @@ public interface CourseMapper {
 
     int updateByPrimaryKey(Course record);
 
-    List<Course> queryAll();
+    List<Course> queryAll(PageReqVO pageReqVO);
 
     List<CoursesAdminQueryRespVO> queryAllByAdmin();
+
+    List<CoursesAdminQueryRespVO> queryCurrentCourse();
+
+    int startCourseByCourseId(String id);
+
+
 }

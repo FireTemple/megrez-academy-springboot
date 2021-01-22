@@ -10,7 +10,7 @@
     id, s_id, c_id
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
-    select 
+    select
     <include refid="Base_Column_List" />
     from student_course
     where id = #{id,jdbcType=VARCHAR}
@@ -63,7 +63,7 @@
   <update id="updateByPrimaryKey" parameterType="com.bohan.entity.StudentCourse">
     update student_course
     set s_id = #{sId,jdbcType=VARCHAR},
-      c_id = #{cId,jdbcType=VARCHAR}
+        c_id = #{cId,jdbcType=VARCHAR}
     where id = #{id,jdbcType=VARCHAR}
   </update>
 
@@ -71,5 +71,19 @@
     select *
     from student_course
     where c_id = #{courseId, jdbcType=VARCHAR} and s_id = #{studentId, jdbcType=VARCHAR}
+  </select>
+
+  <select id="findStudentsByCourseId" parameterType="java.lang.String" resultType="com.bohan.vo.resp.StudentQueryAllRespVO">
+    select s.id, s.first_name as firstName, s.last_name as lastName, s.birth, s.gender, s.`status`, s.current_grade as currentGrande, s.current_school as currentSchool, p.username as pUsername,p.first_name as pName from
+student as s
+    left join
+    student_course as sc
+    on sc.c_id = #{courseId, jdbcType=VARCHAR}
+
+    left join
+    user as p
+    on s.p_id = p.id
+    where s.id = sc.s_id and s.status = 1
+
   </select>
 </mapper>

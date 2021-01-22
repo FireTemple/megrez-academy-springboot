@@ -23,5 +23,5 @@ public interface ChargeMapper {
 
     int cancelCharge(String id);
 
-    int triggerCharge(String id);
+    int triggerCharge(Charge charge);
 }

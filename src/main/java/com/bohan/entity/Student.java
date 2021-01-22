@@ -1,7 +1,8 @@
 package com.bohan.entity;
 
+import com.alibaba.fastjson.annotation.JSONField;
+
 import java.io.Serializable;
-import java.util.Date;
 
 public class Student implements Serializable {
     private String id;
@@ -14,17 +15,15 @@ public class Student implements Serializable {
 
     private String birth;
 
-    private Byte gender;
+    private String gender;
 
     private String email;
 
-    private Date createTime;
-
     private String status;
 
-    private String curentSchool;
+    private String currentSchool;
 
-    private String curentGrade;
+    private String currentGrade;
 
     private static final long serialVersionUID = 1L;
 
@@ -36,11 +35,11 @@ public class Student implements Serializable {
         this.id = id == null ? null : id.trim();
     }
 
-    public String getpId() {
+    public String getPId() {
         return pId;
     }
 
-    public void setpId(String pId) {
+    public void setPId(String pId) {
         this.pId = pId == null ? null : pId.trim();
     }
 
@@ -68,12 +67,12 @@ public class Student implements Serializable {
         this.birth = birth == null ? null : birth.trim();
     }
 
-    public Byte getGender() {
+    public String getGender() {
         return gender;
     }
 
-    public void setGender(Byte gender) {
-        this.gender = gender;
+    public void setGender(String gender) {
+        this.gender = gender == null ? null : gender.trim();
     }
 
     public String getEmail() {
@@ -84,14 +83,6 @@ public class Student implements Serializable {
         this.email = email == null ? null : email.trim();
     }
 
-    public Date getCreateTime() {
-        return createTime;
-    }
-
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
-    }
-
     public String getStatus() {
         return status;
     }
@@ -100,20 +91,20 @@ public class Student implements Serializable {
         this.status = status == null ? null : status.trim();
     }
 
-    public String getCurentSchool() {
-        return curentSchool;
+    public String getCurrentSchool() {
+        return currentSchool;
     }
 
-    public void setCurentSchool(String curentSchool) {
-        this.curentSchool = curentSchool == null ? null : curentSchool.trim();
+    public void setCurrentSchool(String currentSchool) {
+        this.currentSchool = currentSchool == null ? null : currentSchool.trim();
     }
 
-    public String getCurentGrade() {
-        return curentGrade;
+    public String getCurrentGrade() {
+        return currentGrade;
     }
 
-    public void setCurentGrade(String curentGrade) {
-        this.curentGrade = curentGrade == null ? null : curentGrade.trim();
+    public void setCurrentGrade(String currentGrade) {
+        this.currentGrade = currentGrade == null ? null : currentGrade.trim();
     }
 
     @Override
@@ -129,10 +120,9 @@ public class Student implements Serializable {
         sb.append(", birth=").append(birth);
         sb.append(", gender=").append(gender);
         sb.append(", email=").append(email);
-        sb.append(", createTime=").append(createTime);
         sb.append(", status=").append(status);
-        sb.append(", curentSchool=").append(curentSchool);
-        sb.append(", curentGrade=").append(curentGrade);
+        sb.append(", currentSchool=").append(currentSchool);
+        sb.append(", currentGrade=").append(currentGrade);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
         return sb.toString();

@@ -10,4 +10,6 @@ public class UserAddReqVO {
     private String phone;
     private String email;
     private String address;
+    private String firstName;
+    private String lastName;
 }

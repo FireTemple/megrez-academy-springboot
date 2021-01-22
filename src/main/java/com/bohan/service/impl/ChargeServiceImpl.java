@@ -52,13 +52,23 @@ public class ChargeServiceImpl implements ChargeService {
     @Transactional
     public void triggerCourse(List<String> charges) {
 
-        for (String id : charges){
-            int i = chargeMapper.triggerCharge(id);
-            if (i != 1){
+        System.out.println(charges.toString());
+        for (int i = 0;i < charges.size();i ++){
+            String chargeId = charges.get(i);
+            System.out.println(chargeId);
+            Charge charge = chargeMapper.selectByPrimaryKey(chargeId);
+            charge.setStatus("2");
+            int p = chargeMapper.updateByPrimaryKeySelective(charge);
+
+            if (p != 1){
                 throw new BusinessExceptionIpm(BaseResponseCodeImp.DATABASE_ERROR_UPDATE);
             }
         }
+
     }
 
-
+    @Override
+    public Charge queryById(String id) {
+        return chargeMapper.selectByPrimaryKey(id);
+    }
 }

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Subscription</title>
+    <!--Bootstrap 4 CSS-->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+
+    <!--Bootstrap 4 JavaScript-->
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+    <!--Stripe JavaScript Library-->
+</head>
+<body class="bg-light pt-5">
+
+<!--hero section-->
+<section class="py-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6 col-md-8 col-12 my-auto mx-auto">
+                <p style="color: green">success! your charge id is show below</p>
+                <p th:text="${customerId}"></p>
+                <p class="lead mb-4">we will charge your later when the course will open! Until then you will not been charged</p>
+                <p class="lead mb-4">
+                    <a href="javascript:void(0);" onclick="goCoursePage()">return to the course page</a>
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!--custom javascript for handling subscription-->
+<script>
+    function goCoursePage() {
+        location.href="/index";
+    }
+</script>
+</body>
+</html>

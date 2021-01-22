@@ -31,20 +31,16 @@ public class StudentController {
         return result;
     }
 
-    @PostMapping("/student/add")
+    @PostMapping("/student")
     @ApiOperation(value = "add new student")
-    public ResultData addNewStudent(@RequestBody StudentAddReqVO vo, HttpServletRequest request){
-        String pId = request.getHeader("userId");
-        if (pId == null){
-            return new ResultData(100000,"you need login first");
-        }
-        vo.setPId(pId);
+    public ResultData addNewStudent(@RequestBody StudentAddReqVO vo){
+        System.out.println(vo.getpId());
         studentService.addStudent(vo);
         return ResultData.success();
     }
 
-    @DeleteMapping("/students/{id}")
-    @ApiOperation(value = "query parent's kids")
+    @DeleteMapping("/student/{id}")
+    @ApiOperation(value = "delete student")
     public ResultData deleteStudentsByUserId(@PathVariable("id") String id){
         ResultData result = ResultData.success();
         studentService.deleteStudent(id);
@@ -52,14 +48,35 @@ public class StudentController {
     }
 
 
-    @PostMapping("/student")
+    @PutMapping("/student")
     @ApiOperation(value = "updating student information")
-    public ResultData updateStudent(@RequestBody StudentUpdateReqVO vo,HttpServletRequest request){
+    public ResultData updateStudent(@RequestBody StudentUpdateReqVO vo){
         ResultData resultData = ResultData.success();
-        vo.setId(request.getHeader("studentId"));
-        System.out.println("id in controller:  "+ vo.getId());
         studentService.updateStudentById(vo);
         return resultData;
     }
 
+    @GetMapping("/students")
+    @ApiOperation(value = "query All Students by admin")
+    public ResultData queryAll(){
+        ResultData resultData = ResultData.success();
+        resultData.setData(studentService.queryAll());
+        return resultData;
+    }
+
+    @GetMapping("/student/{studentId}")
+    @ApiOperation(value = "query student by id")
+    public ResultData queryStudentByStudentId(@PathVariable("studentId") String studentId){
+        ResultData result = ResultData.success();
+        result.setData(studentService.queryStudentById(studentId));
+        return result;
+    }
+
+    @GetMapping("/students/course/{courseId}")
+    @ApiOperation(value = "query students by course id")
+    public ResultData queryStudentByCourseId(@PathVariable("courseId")String courseId){
+        ResultData result = ResultData.success();
+        result.setData(studentService.queryStudentByCourseId(courseId));
+        return result;
+    }
 }

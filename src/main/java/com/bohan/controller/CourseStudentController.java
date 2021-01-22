@@ -5,9 +5,7 @@ import com.bohan.utils.ResultData;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api")
@@ -24,6 +22,14 @@ public class CourseStudentController {
         int i = courseStudentService.checkIfStudentValid(studentId, courseId);
         result.setData(i);
         return result;
+    }
+
+    @GetMapping("/current/students/{courseId}")
+    @ApiOperation(value = "find all students for this course")
+    public ResultData queryCurrentStudentByCourseId(@PathVariable("courseId")String id){
+        ResultData resultData = ResultData.success();
+        resultData.setData(courseStudentService.queryAllByCourseId(id));
+        return resultData;
     }
 
 }

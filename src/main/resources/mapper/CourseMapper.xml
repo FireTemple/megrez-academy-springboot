@@ -206,7 +206,7 @@
     where id = #{id,jdbcType=VARCHAR}
   </update>
 
-    <select id="queryAll" resultMap="BaseResultMap">
+    <select id="queryAll" resultMap="BaseResultMap" parameterType="com.bohan.vo.req.PageReqVO">
         select
         <include refid="Base_Column_List"/>
         from course
@@ -223,4 +223,18 @@
         on c.t_id = p.id
         where c.id = #{id,jdbcType=VARCHAR};
     </select>
+
+    <select id="queryCurrentCourse" resultMap="adminResultMap">
+        select *
+        from course
+        where status = '4'
+    </select>
+
+    <update id="startCourseByCourseId" parameterType="java.lang.String">
+        update course
+        set status = '4'
+        where id = #{id,jdbcType=VARCHAR}
+    </update>
+
+
 </mapper>
